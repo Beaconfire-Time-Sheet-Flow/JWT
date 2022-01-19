@@ -13,12 +13,10 @@ public class PersonDomain {
 
     private String lastName;
 
-    private String preferName;
-
     private String avatar;
 
     private String dob;
 
-    private String SSN;
+    private String ssn;
 
 }

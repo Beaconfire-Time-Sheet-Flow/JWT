@@ -89,17 +89,6 @@ public class PersonController {
         return ResponseEntity.ok(employeeDomain);
     }
 
-    @PostMapping("/updateVisa")
-    public ResponseEntity<VisaStatusDomain> updateVisa(@RequestBody VisaStatusDomain visaStatusDomain,
-                                                       @RequestParam("id") Integer personId){
-        if(personId<=0){
-            return ResponseEntity.notFound().build();
-        }
-        Person person = personService.findPersonById(personId);
-        visaService.updateVisaWithPerson(visaStatusDomain, person);
-        return ResponseEntity.ok(visaStatusDomain);
-    }
-
     @PostMapping("/updateDocs")
     public ResponseEntity<List<PersonalDocsDomain>> updateDocs(
             @RequestBody List<PersonalDocsDomain> personalDocsDomainList,
@@ -125,6 +114,21 @@ public class PersonController {
         return ResponseEntity.ok(contactDomain);
     }
 
+    @PostMapping("/updateEmergency")
+    public ResponseEntity<List<EmergencyContactDomain>> updateEmergency(
+            @RequestBody List<EmergencyContactDomain> contactDomains,
+            @RequestParam("id") Integer personId){
+        if(personId<=0){
+            return ResponseEntity.notFound().build();
+        }
+        Person person = personService.findPersonById(personId);
+        if(person==null){
+            return ResponseEntity.notFound().build();
+        }
+        contactService.updateEmergency(contactDomains, person);
+        return ResponseEntity.ok(contactDomains);
+    }
+
     @PostMapping("/updatePersonInfo")
     public ResponseEntity<PersonDomain> updatePerson(@RequestBody PersonDomain personDomain, @RequestParam("id") Integer personId){
         if(personId<=0){
@@ -134,4 +138,19 @@ public class PersonController {
         return ResponseEntity.ok(personDomain);
     }
 
+    @PostMapping("/addPersonalDocs")
+    public ResponseEntity<List<PersonalDocsDomain>> addNewDocs(
+            @RequestBody List<PersonalDocsDomain> docsDomainList,
+            @RequestParam("id") Integer personId){
+        if(personId<=0){
+            return ResponseEntity.notFound().build();
+        }
+        Person person = personService.findPersonById(personId);
+        Employee employee = employeeService.getEmployeeByPersonId(person);
+        if(person==null || employee==null){
+            return ResponseEntity.notFound().build();
+        }
+        personalDocService.addNewDocs(docsDomainList, employee);
+        return ResponseEntity.ok(docsDomainList);
+    }
 }

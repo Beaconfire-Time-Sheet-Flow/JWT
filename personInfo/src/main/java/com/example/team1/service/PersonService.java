@@ -37,7 +37,7 @@ public class PersonService {
             personDomain.setFirstName(person.getFirstName());
             personDomain.setLastName(person.getLastName());
             personDomain.setAvatar(employeeDao.getEmployeeByPersonId(person).getAvatar());
-            personDomain.setSSN(person.getSsn());
+            personDomain.setSsn(person.getSsn());
             personDomain.setDob(person.getDob());
             return personDomain;
         }
@@ -52,16 +52,22 @@ public class PersonService {
     @Transactional
     public Person updateInfo(PersonDomain personDomain, Integer personId){
         Person curPerson = personDao.getPersonById(personId);
+        if(curPerson==null){
+            return null;
+        }
         curPerson.setFirstName(personDomain.getFirstName());
         curPerson.setLastName(personDomain.getLastName());
         curPerson.setDob(personDomain.getDob());
-        curPerson.setSsn(personDomain.getSSN());
+        curPerson.setSsn(personDomain.getSsn());
         return personDao.saveInfo(curPerson);
     }
 
     @Transactional
     public Person updateContact(ContactDomain contactDomain, Integer personId){
         Person curPerson = personDao.getPersonById(personId);
+        if(curPerson==null){
+            return null;
+        }
         curPerson.setCellPhone(contactDomain.getCellPhone());
         curPerson.setAlternatePhone(contactDomain.getWorkPhone());
         curPerson.setEmail(contactDomain.getEmail());

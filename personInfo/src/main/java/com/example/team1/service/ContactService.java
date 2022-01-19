@@ -19,24 +19,51 @@ public class ContactService {
     @Autowired
     private ContactDao contactDao;
 
-    @Autowired
-    private AddressService addressService;
-
     @Transactional
     public List<EmergencyContactDomain> getEmergencyByPersonId(Person person){
         List<EmergencyContactDomain> domainList = new ArrayList<>();
         List<Contact> contacts = contactDao.getContactByPersonId(person);
-        if(contacts!=null&& contacts.size()>0){
+        if(contacts!=null && contacts.size()>0){
             for(Contact contact : contacts){
                 if(contact.getIsEmergency()){
-                    EmergencyContactDomain emergencyContactDomain = new EmergencyContactDomain(
-                            person.getFirstName()+person.getLastName(),
-                            person.getCellPhone(),
-                            addressService.getAddressByPersonId(person));
+                    EmergencyContactDomain emergencyContactDomain =
+                            new EmergencyContactDomain(contact.getName(), contact.getPhone(), contact.getAddress());
                     domainList.add(emergencyContactDomain);
                 }
             }
         }
         return domainList;
+    }
+
+    @Transactional
+    public void updateEmergency(List<EmergencyContactDomain> emergencyContactDomains, Person person){
+        List<Contact> contacts = contactDao.getContactByPersonId(person);
+        if(contacts!=null && !contacts.isEmpty() && emergencyContactDomains!=null && !emergencyContactDomains.isEmpty()){
+            for(int i = 0;i<emergencyContactDomains.size();i++){
+                EmergencyContactDomain domain = emergencyContactDomains.get(i);
+                if(i<contacts.size()){
+                    Contact contact = contacts.get(i);
+                    contact.setIsEmergency(true);
+                    contact.setName(domain.getName());
+                    contact.setAddress(domain.getAddress());
+                    contact.setPhone(domain.getPhone());
+                    contactDao.updateContact(contact);
+                }else {
+                    addNewContact(domain, person);
+                }
+            }
+        }
+
+    }
+
+    @Transactional
+    public void addNewContact(EmergencyContactDomain emergencyContactDomain, Person person){
+        Contact contact = new Contact();
+        contact.setPerson(person);
+        contact.setAddress(emergencyContactDomain.getAddress());
+        contact.setPhone(emergencyContactDomain.getPhone());
+        contact.setName(emergencyContactDomain.getName());
+        contact.setIsEmergency(true);
+        contactDao.addContact(contact);
     }
 }

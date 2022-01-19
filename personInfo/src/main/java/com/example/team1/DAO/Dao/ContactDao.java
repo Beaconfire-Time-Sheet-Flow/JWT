@@ -30,4 +30,8 @@ public class ContactDao extends AbstractHibernateDao<Contact> {
     public void addContact(Contact contact){
         persist(contact);
     }
+
+    public Contact updateContact(Contact contact){
+        return merge(contact);
+    }
 }

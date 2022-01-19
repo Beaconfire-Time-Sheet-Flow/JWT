@@ -17,5 +17,4 @@ public class ContactDomain {
 
     private String workEmail;
 
-    private Integer personId;
 }

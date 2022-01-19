@@ -16,5 +16,5 @@ public class EmergencyContactDomain {
 
     private String phone;
 
-    private List<AddressDomain> addressDomains;
+    private String address;
 }

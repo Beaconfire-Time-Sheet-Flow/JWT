@@ -54,20 +54,35 @@ public class PersonalDocService {
                     doc.setPath(domain.getPath());
                     personalDocumentDao.update(doc);
                 }else {
-                    addNewDocs(domain, employee);
+                    addNewDoc(domain, employee);
                 }
             }
         }
     }
 
     @Transactional
-    public void addNewDocs(PersonalDocsDomain docsDomain, Employee employee){
+    public void addNewDoc(PersonalDocsDomain docsDomain, Employee employee){
         PersonalDocument document = new PersonalDocument();
         document.setEmployee(employee);
         document.setTitle(docsDomain.getTitle());
         document.setComment(docsDomain.getComment());
         document.setPath(docsDomain.getPath());
         personalDocumentDao.addDocs(document);
+    }
+
+    @Transactional
+    public void addNewDocs(List<PersonalDocsDomain> personalDocsDomainList, Employee employee){
+        if(personalDocsDomainList!=null && employee!=null){
+            for(PersonalDocsDomain personalDocsDomain : personalDocsDomainList){
+                PersonalDocument doc = new PersonalDocument();
+                doc.setEmployee(employee);
+                doc.setTitle(personalDocsDomain.getTitle());
+                doc.setPath(personalDocsDomain.getPath());
+                doc.setComment(personalDocsDomain.getComment());
+                personalDocumentDao.addDocs(doc);
+            }
+        }
+
     }
 }
 

@@ -17,9 +17,6 @@ public class EmployeeService {
     @Autowired
     private EmployeeDao employeeDao;
 
-    @Autowired
-    private VisaDao visaDao;
-
     @Transactional
     public Employee getEmployeeById(Integer id){
         return employeeDao.getEmployeeById(id);
@@ -61,6 +58,8 @@ public class EmployeeService {
         employee.setVisaStartDate(employeeDomain.getVisaStartDate());
         employee.setVisaEndDate(employeeDomain.getVisaEndDate());
         employee.setTitle(employeeDomain.getTitle());
+        employee.setDriverLicense(employeeDomain.getDriverLicense());
+        employee.setDriverLicenseExpirationDate(employeeDomain.getDriverLicenseExpirationDate());
         return employeeDao.save(employee);
     }
 
@@ -70,7 +69,5 @@ public class EmployeeService {
         employee.setPerson(person);
         employee.setAvatar(employee.getAvatar());
         employee.setTitle(employeeDomain.getTitle());
-
-
     }
 }
