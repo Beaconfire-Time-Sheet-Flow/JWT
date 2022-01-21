@@ -37,9 +37,9 @@ public class PersonController {
     private VisaService visaService;
 
     @GetMapping("/")
-    public ResponseEntity<List<Object>> getPersonalInfo(@RequestParam("id") Integer personId){
+    public ResponseEntity<PersonInfoDomain> getPersonalInfo(@RequestParam("id") Integer personId){
         Person person = personService.findPersonById(personId);
-        List<Object> result = new ArrayList<>();
+        PersonInfoDomain res = new PersonInfoDomain();
         if(person!=null){
             PersonDomain personDomain = personService.findPersonInfoById(person);
             ContactDomain contactDomain = ContactDomain.builder()
@@ -54,15 +54,13 @@ public class PersonController {
             VisaStatusDomain visaStatusDomain = visaService.getVisaByPersonId(person);
             if(employee!=null){
                 List<PersonalDocsDomain> docsDomains = personalDocService.getPersonalDocInfoByEmployeeId(employee);
-                Collections.addAll(result,
-                        personDomain,
-                        employeeDomain,
-                        addressDomains,
-                        contactDomain,
-                        emergencyContactDomains,
-                        visaStatusDomain,
-                        docsDomains);
-                return ResponseEntity.ok(result);
+                res.setPersonDomain(personDomain);
+                res.setAddressDomains(addressDomains);
+                res.setPersonalDocsDomains(docsDomains);
+                res.setEmployeeDomain(employeeDomain);
+                res.setEmergencyContactDomains(emergencyContactDomains);
+                res.setVisaStatusDomain(visaStatusDomain);
+                return ResponseEntity.ok(res);
             }
         }
         return ResponseEntity.notFound().build();
