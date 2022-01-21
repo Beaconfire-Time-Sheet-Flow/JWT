@@ -41,25 +41,29 @@ public class PersonController {
         Person person = personService.findPersonById(personId);
         PersonInfoDomain res = new PersonInfoDomain();
         if(person!=null){
-            PersonDomain personDomain = personService.findPersonInfoById(person);
-            ContactDomain contactDomain = ContactDomain.builder()
-                    .cellPhone(person.getCellPhone())
-                    .workPhone(person.getAlternatePhone())
-                    .email(person.getEmail())
-                    .workEmail(person.getEmail()).build();
-            EmployeeDomain employeeDomain = employeeService.getEmployeeInfoByPersonId(person);
-            List<AddressDomain> addressDomains = addressService.getAddressByPersonId(person);
-            List<EmergencyContactDomain> emergencyContactDomains = contactService.getEmergencyByPersonId(person);
             Employee employee = employeeService.getEmployeeByPersonId(person);
-            VisaStatusDomain visaStatusDomain = visaService.getVisaByPersonId(person);
-            if(employee!=null){
+            if(employee!= null){
+                res.setFirstName(person.getFirstName());
+                res.setLastName(person.getLastName());
+                res.setMiddleName(person.getMiddleName());
+                res.setAvatar(employee.getAvatar());
+                res.setGender(person.getGender());
+                res.setDriverLicense(employee.getDriverLicense());
+                res.setDriverLicense(employee.getDriverLicenseExpirationDate());
+                res.setEmail(person.getEmail());
+                res.setCellPhone(person.getCellPhone());
+                res.setAlternatePhone(person.getAlternatePhone());
+                EmployeeDomain employeeDomain = employeeService.getEmployeeInfoByPersonId(person);
+                List<AddressDomain> addressList = addressService.getAddressByPersonId(person);
+                List<EmergencyContactDomain> emergencyContactDomains = contactService.getEmergencyByPersonId(person);
                 List<PersonalDocsDomain> docsDomains = personalDocService.getPersonalDocInfoByEmployeeId(employee);
-                res.setPersonDomain(personDomain);
-                res.setAddressDomains(addressDomains);
-                res.setPersonalDocsDomains(docsDomains);
-                res.setEmployeeDomain(employeeDomain);
-                res.setEmergencyContactDomains(emergencyContactDomains);
-                res.setVisaStatusDomain(visaStatusDomain);
+                res.setAddressList(addressList);
+                res.setDocumentList(docsDomains);
+                res.setEmployment(employeeDomain);
+                res.setContact(emergencyContactDomains);
+                res.setId(personId);
+                res.setSSN(person.getSsn());
+                res.setDob(person.getDob());
                 return ResponseEntity.ok(res);
             }
         }
@@ -113,8 +117,8 @@ public class PersonController {
     }
 
     @PostMapping("/updateEmergency")
-    public ResponseEntity<List<EmergencyContactDomain>> updateEmergency(
-            @RequestBody List<EmergencyContactDomain> contactDomains,
+    public ResponseEntity<EmergencyContactDomain> updateEmergency(
+            @RequestBody EmergencyContactDomain contactDomain,
             @RequestParam("id") Integer personId){
         if(personId<=0){
             return ResponseEntity.notFound().build();
@@ -123,8 +127,8 @@ public class PersonController {
         if(person==null){
             return ResponseEntity.notFound().build();
         }
-        contactService.updateEmergency(contactDomains, person);
-        return ResponseEntity.ok(contactDomains);
+        contactService.updateEmergency(contactDomain, person);
+        return ResponseEntity.ok(contactDomain);
     }
 
     @PostMapping("/updatePersonInfo")

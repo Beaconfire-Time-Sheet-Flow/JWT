@@ -27,7 +27,15 @@ public class ContactService {
             for(Contact contact : contacts){
                 if(contact.getIsEmergency()){
                     EmergencyContactDomain emergencyContactDomain =
-                            new EmergencyContactDomain(contact.getName(), contact.getPhone(), contact.getAddress());
+                            new EmergencyContactDomain(person.getId(),
+                                    contact.getName(),
+                                    contact.getPhone(),
+                                    contact.getAddress(),
+                                    contact.getRelationship(),
+                                    contact.getTitle(),
+                                    contact.getId(),
+                                    contact.getIsReference(),
+                                    contact.getIsEmergency());
                     domainList.add(emergencyContactDomain);
                 }
             }
@@ -36,22 +44,15 @@ public class ContactService {
     }
 
     @Transactional
-    public void updateEmergency(List<EmergencyContactDomain> emergencyContactDomains, Person person){
+    public void updateEmergency(EmergencyContactDomain emergencyContactDomain, Person person){
         List<Contact> contacts = contactDao.getContactByPersonId(person);
-        if(contacts!=null && !contacts.isEmpty() && emergencyContactDomains!=null && !emergencyContactDomains.isEmpty()){
-            for(int i = 0;i<emergencyContactDomains.size();i++){
-                EmergencyContactDomain domain = emergencyContactDomains.get(i);
-                if(i<contacts.size()){
-                    Contact contact = contacts.get(i);
-                    contact.setIsEmergency(true);
-                    contact.setName(domain.getName());
-                    contact.setAddress(domain.getAddress());
-                    contact.setPhone(domain.getPhone());
-                    contactDao.updateContact(contact);
-                }else {
-                    addNewContact(domain, person);
-                }
-            }
+        if(contacts!=null && !contacts.isEmpty() && emergencyContactDomain!=null){
+            Contact contact = contacts.get(0);
+            contact.setIsEmergency(true);
+            contact.setName(emergencyContactDomain.getName());
+            contact.setAddress(emergencyContactDomain.getAddress());
+            contact.setPhone(emergencyContactDomain.getPhone());
+            contactDao.updateContact(contact);
         }
 
     }

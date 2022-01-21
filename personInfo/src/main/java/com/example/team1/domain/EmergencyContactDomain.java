@@ -12,9 +12,21 @@ import java.util.List;
 @AllArgsConstructor
 public class EmergencyContactDomain {
 
+    private Integer personId;
+
     private String name;
 
     private String phone;
 
     private String address;
+
+    private String relationship;
+
+    private String title;
+
+    private Integer id;
+
+    private Boolean isReference;
+
+    private Boolean isEmergency;
 }

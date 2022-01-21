@@ -15,18 +15,10 @@ public class EmployeeDomain {
 
     private String endDate;
 
-    private String avatar;
-
-    private String title;
-
     private String visaStartDate;
 
     private String visaEndDate;
 
-    //optional
-    private String driverLicense;
-
-    //optional
-    private String driverLicenseExpirationDate;
+    private String title;
 
 }

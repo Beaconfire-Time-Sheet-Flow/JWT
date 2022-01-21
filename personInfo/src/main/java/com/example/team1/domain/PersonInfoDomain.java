@@ -11,16 +11,40 @@ import java.util.List;
 @AllArgsConstructor
 public class PersonInfoDomain {
 
-    private PersonDomain personDomain;
+    private String firstName;
 
-    private EmployeeDomain employeeDomain;
+    private String lastName;
 
-    private List<EmergencyContactDomain> emergencyContactDomains;
+    private String middleName;
 
-    private List<AddressDomain> addressDomains;
+    private String avatar;
 
-    private List<PersonalDocsDomain> personalDocsDomains;
+    private String gender;
 
-    private VisaStatusDomain visaStatusDomain;
+    //optional
+    private String driverLicense;
+
+    //optional
+    private String driverLicenseExpirationDate;
+
+    private String email;
+
+    private String cellPhone;
+
+    private String alternatePhone;
+
+    private EmployeeDomain employment;
+
+    private List<EmergencyContactDomain> contact;
+
+    private List<AddressDomain> addressList;
+
+    private List<PersonalDocsDomain> documentList;
+
+    private Integer id;
+
+    private String dob;
+
+    private String SSN;
 
 }

@@ -20,4 +20,6 @@ public class AddressDomain {
     private String zipcode;
 
     private Integer personId;
+
+    private Integer id;
 }

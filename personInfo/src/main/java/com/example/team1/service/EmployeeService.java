@@ -38,13 +38,10 @@ public class EmployeeService {
             Employee employee = optional.get();
             return new EmployeeDomain(employee.getVisaStatus().getVisaType(),
                     employee.getTitle(),
-                    employee.getAvatar(),
                     employee.getStartDate(),
                     employee.getEndDate(),
                     employee.getVisaStartDate(),
-                    employee.getVisaEndDate(),
-                    employee.getDriverLicense(),
-                    employee.getDriverLicenseExpirationDate());
+                    employee.getVisaEndDate());
         }
         return null;
     }
@@ -58,8 +55,6 @@ public class EmployeeService {
         employee.setVisaStartDate(employeeDomain.getVisaStartDate());
         employee.setVisaEndDate(employeeDomain.getVisaEndDate());
         employee.setTitle(employeeDomain.getTitle());
-        employee.setDriverLicense(employeeDomain.getDriverLicense());
-        employee.setDriverLicenseExpirationDate(employeeDomain.getDriverLicenseExpirationDate());
         return employeeDao.save(employee);
     }
 
