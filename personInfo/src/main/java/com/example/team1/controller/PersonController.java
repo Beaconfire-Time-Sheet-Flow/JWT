@@ -15,7 +15,7 @@ import java.util.Collections;
 import java.util.List;
 
 @RestController
-@RequestMapping("/personInfo")
+@RequestMapping("/api/personInfo")
 public class PersonController {
 
     @Autowired
@@ -63,7 +63,7 @@ public class PersonController {
                 res.setContact(emergencyContactDomains);
                 res.setId(personId);
                 res.setSSN(person.getSsn());
-                res.setDob(person.getDob());
+                res.setDob(person.getDOB());
                 return ResponseEntity.ok(res);
             }
         }
@@ -132,12 +132,15 @@ public class PersonController {
     }
 
     @PostMapping("/updatePersonInfo")
-    public ResponseEntity<PersonDomain> updatePerson(@RequestBody PersonDomain personDomain, @RequestParam("id") Integer personId){
-        if(personId<=0){
+    public ResponseEntity<UpdatePersonInfo> updatePerson(@RequestBody UpdatePersonInfo updatePersonInfo, @RequestParam(name = "id", required = false) Integer personId){
+        if(personId==null && updatePersonInfo.getID()!=null){
+            personService.updateInfo(updatePersonInfo);
+            return ResponseEntity.ok(updatePersonInfo);
+        }else if(personId<=0 || updatePersonInfo.getID()==null || updatePersonInfo.getID()<=0){
             return ResponseEntity.notFound().build();
         }
-        personService.updateInfo(personDomain, personId);
-        return ResponseEntity.ok(personDomain);
+        personService.updateInfoWithGivenId(updatePersonInfo, personId);
+        return ResponseEntity.ok(updatePersonInfo);
     }
 
     @PostMapping("/addPersonalDocs")

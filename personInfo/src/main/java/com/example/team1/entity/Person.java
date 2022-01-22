@@ -48,7 +48,7 @@ public class Person implements Serializable {
     private String ssn;
 
     @Column(name = "DOB")
-    private String dob;
+    private String DOB;
 
     @Column(name = "UserID")
     private Integer userId;

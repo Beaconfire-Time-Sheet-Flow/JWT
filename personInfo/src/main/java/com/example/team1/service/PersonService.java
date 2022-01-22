@@ -4,7 +4,10 @@ import com.example.team1.DAO.Dao.EmployeeDao;
 import com.example.team1.DAO.Dao.PersonDao;
 import com.example.team1.domain.ContactDomain;
 import com.example.team1.domain.PersonDomain;
+import com.example.team1.domain.UpdatePersonInfo;
+import com.example.team1.entity.Employee;
 import com.example.team1.entity.Person;
+import com.example.team1.exception.PersonInfoNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -38,7 +41,7 @@ public class PersonService {
             personDomain.setLastName(person.getLastName());
             personDomain.setAvatar(employeeDao.getEmployeeByPersonId(person).getAvatar());
             personDomain.setSsn(person.getSsn());
-            personDomain.setDob(person.getDob());
+            personDomain.setDob(person.getDOB());
             return personDomain;
         }
         return null;
@@ -50,15 +53,48 @@ public class PersonService {
     }
 
     @Transactional
-    public Person updateInfo(PersonDomain personDomain, Integer personId){
+    public Person updateInfo(UpdatePersonInfo updatePersonInfo){
+        Person curPerson = personDao.getPersonById(updatePersonInfo.getID());
+        if(curPerson==null){
+            throw new PersonInfoNotFoundException("person with id: "+updatePersonInfo.getID()+"not found");
+        }
+        Employee employee = employeeDao.getEmployeeByPersonId(curPerson);
+        if(employee==null){
+            throw new PersonInfoNotFoundException("employee with person id: "+updatePersonInfo.getID()+" not found");
+        }
+        curPerson.setFirstName(updatePersonInfo.getFirstName());
+        curPerson.setLastName(updatePersonInfo.getLastName());
+        curPerson.setDOB(updatePersonInfo.getDob());
+        curPerson.setSsn(updatePersonInfo.getSsn());
+        curPerson.setGender(updatePersonInfo.getGender());
+        curPerson.setMiddleName(updatePersonInfo.getMiddleName());
+        employee.setAvatar(updatePersonInfo.getAvatar());
+        employee.setDriverLicense(updatePersonInfo.getDriverLicense());
+        employee.setDriverLicenseExpirationDate(updatePersonInfo.getDriverLicense_ExpirationDate());
+        employeeDao.save(employee);
+        return personDao.saveInfo(curPerson);
+    }
+
+    @Transactional
+    public Person updateInfoWithGivenId(UpdatePersonInfo updatePersonInfo, Integer personId){
         Person curPerson = personDao.getPersonById(personId);
         if(curPerson==null){
-            return null;
+            throw new PersonInfoNotFoundException("person with id: "+updatePersonInfo.getID()+"not found");
         }
-        curPerson.setFirstName(personDomain.getFirstName());
-        curPerson.setLastName(personDomain.getLastName());
-        curPerson.setDob(personDomain.getDob());
-        curPerson.setSsn(personDomain.getSsn());
+        Employee employee = employeeDao.getEmployeeByPersonId(curPerson);
+        if(employee==null){
+            throw new PersonInfoNotFoundException("employee with person id: "+updatePersonInfo.getID()+" not found");
+        }
+        curPerson.setFirstName(updatePersonInfo.getFirstName());
+        curPerson.setLastName(updatePersonInfo.getLastName());
+        curPerson.setDOB(updatePersonInfo.getDob());
+        curPerson.setSsn(updatePersonInfo.getSsn());
+        curPerson.setGender(updatePersonInfo.getGender());
+        curPerson.setMiddleName(updatePersonInfo.getMiddleName());
+        employee.setAvatar(updatePersonInfo.getAvatar());
+        employee.setDriverLicense(updatePersonInfo.getDriverLicense());
+        employee.setDriverLicenseExpirationDate(updatePersonInfo.getDriverLicense_ExpirationDate());
+        employeeDao.save(employee);
         return personDao.saveInfo(curPerson);
     }
 
