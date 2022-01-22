@@ -7,8 +7,11 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 
 @Setter
 @Getter
-@ConfigurationProperties(prefix = "file")
-public class FileUploadProperties {
+@ConfigurationProperties("storage")
+public class StorageProperties {
 
-    private String uploadDir;
+    /**
+     * Folder location for storing files
+     */
+    private String location = "upload-dir";
 }
