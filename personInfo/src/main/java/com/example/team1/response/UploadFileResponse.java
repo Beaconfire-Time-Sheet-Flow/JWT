@@ -10,7 +10,8 @@ import lombok.Setter;
 public class UploadFileResponse {
 
     private String fileName;
-    private String fileDownloadUri;
+    private String path;//path in db
+    //private String comment;
     private String fileType;
     private long size;
 }

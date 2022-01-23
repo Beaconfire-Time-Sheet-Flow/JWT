@@ -33,8 +33,10 @@ public class PersonalDocService {
         List<PersonalDocument> documents = personalDocumentDao.getDocsByEmployeeId(employee);
         if(documents!=null && documents.size()>0){
             for(PersonalDocument docs : documents){
-                PersonalDocsDomain personalDocsDomain = new PersonalDocsDomain(docs.getTitle(),
-                        docs.getPath(), docs.getComment());
+                PersonalDocsDomain personalDocsDomain = new PersonalDocsDomain(
+                        docs.getTitle(),
+                        docs.getComment(),
+                        docs.getPath());
                 domains.add(personalDocsDomain);
             }
         }
@@ -57,6 +59,18 @@ public class PersonalDocService {
                     addNewDoc(domain, employee);
                 }
             }
+        }
+    }
+
+    @Transactional
+    public void updatePersonalDoc(PersonalDocsDomain docDomain, Employee employee){
+        List<PersonalDocument> documents = personalDocumentDao.getDocsByEmployeeId(employee);
+        if(documents!=null && !documents.isEmpty() && docDomain != null){
+            PersonalDocument doc = documents.get(0);
+            doc.setComment(docDomain.getComment());
+            doc.setPath(docDomain.getPath());
+            doc.setTitle(docDomain.getTitle());
+            personalDocumentDao.update(doc);
         }
     }
 
