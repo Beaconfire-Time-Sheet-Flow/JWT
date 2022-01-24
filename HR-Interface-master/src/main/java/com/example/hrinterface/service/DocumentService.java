@@ -40,6 +40,7 @@ public class DocumentService {
         return null;
     }
 
+    //modify
     public void addNewDigitalDoc(DigitalDocument digitalDocument){
         try {
             digitalDocumentDAO.addNewDocument(digitalDocument);
@@ -48,10 +49,11 @@ public class DocumentService {
         }
     }
 
-    public DigitalDocument updateDigitalDoc(DigitalDocument digitalDocument){
+    //modify
+    public void updateDigitalDoc(DigitalDocument digitalDocument){
         if(digitalDocument == null){
-            return null;
+            return;
         }
-        return digitalDocumentDAO.updateDigitalDoc(digitalDocument);
+        digitalDocumentDAO.updateDigitalDoc(digitalDocument);
     }
 }

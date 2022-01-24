@@ -25,11 +25,13 @@ public class DigitalDocumentDAO {
         return  digitalDocument;
     }
 
+    //modify
     public void addNewDocument(DigitalDocument digitalDocument){
-        getCurrentSession().persist(digitalDocument);
+        getCurrentSession().saveOrUpdate(digitalDocument);
     }
 
-    public DigitalDocument updateDigitalDoc(DigitalDocument digitalDocument){
-        return (DigitalDocument) getCurrentSession().merge(digitalDocument);
+    //modify
+    public void updateDigitalDoc(DigitalDocument digitalDocument){
+        getCurrentSession().saveOrUpdate(digitalDocument);
     }
 }
