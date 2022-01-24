@@ -35,8 +35,8 @@ public class PersonalDocService {
             for(PersonalDocument docs : documents){
                 PersonalDocsDomain personalDocsDomain = new PersonalDocsDomain(
                         docs.getTitle(),
-                        docs.getComment(),
-                        docs.getPath());
+                        docs.getPath(),
+                        docs.getComment());
                 domains.add(personalDocsDomain);
             }
         }
