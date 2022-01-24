@@ -176,9 +176,10 @@ public class PersonController {
         return ResponseEntity.ok(updatePersonInfo);
     }
 
-    @PostMapping("/addPersonalDocs")
-    public ResponseEntity<List<PersonalDocsDomain>> addNewDocs(
-            @RequestParam("files") MultipartFile[] files,
+    @PostMapping("/addDoc")
+    public ResponseEntity<PersonalDocsDomain> addNewDoc(
+            @RequestParam("file") MultipartFile file,
+            @RequestParam(value = "comment", required = false) String comment,
             @RequestParam("id") Integer personId){
         if(personId<=0){
             return ResponseEntity.notFound().build();
@@ -188,19 +189,16 @@ public class PersonController {
             throw new PersonInfoNotFoundException("Person with id: "+personId+" does not exist.");
         }
         Employee employee = employeeService.getEmployeeByPersonId(person);
-        if(person==null || employee==null){
+        if(employee==null){
             return ResponseEntity.notFound().build();
         }
-        List<PersonalDocsDomain> docsDomainList = new ArrayList<>();
-        List<UploadFileResponse> responses = uploadMultipleFiles(files);
-        for(UploadFileResponse response : responses){
-            docsDomainList.add(PersonalDocsDomain.builder()
-                    .title(response.getFileName())
-                    .path(response.getPath())
-                    .build());
-        }
-        personalDocService.addNewDocs(docsDomainList, employee);
-        return ResponseEntity.ok(docsDomainList);
+        PersonalDocsDomain domain = new PersonalDocsDomain();
+        UploadFileResponse response = uploadFile(file);
+        domain.setComment(comment);
+        domain.setTitle(response.getFileName());
+        domain.setPath(response.getPath());
+        personalDocService.addNewDoc(domain, employee);
+        return ResponseEntity.ok(domain);
     }
 
     //file uploading
