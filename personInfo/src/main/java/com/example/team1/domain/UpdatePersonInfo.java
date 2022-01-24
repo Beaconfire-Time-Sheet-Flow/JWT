@@ -10,7 +10,7 @@ import lombok.*;
 @AllArgsConstructor
 public class UpdatePersonInfo {
 
-    private Integer ID;
+    private Integer id;
 
     private String firstName;
 

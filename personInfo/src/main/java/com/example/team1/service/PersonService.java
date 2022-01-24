@@ -54,13 +54,13 @@ public class PersonService {
 
     @Transactional
     public Person updateInfo(UpdatePersonInfo updatePersonInfo){
-        Person curPerson = personDao.getPersonById(updatePersonInfo.getID());
+        Person curPerson = personDao.getPersonById(updatePersonInfo.getId());
         if(curPerson==null){
-            throw new PersonInfoNotFoundException("person with id: "+updatePersonInfo.getID()+"not found");
+            throw new PersonInfoNotFoundException("person with id: "+updatePersonInfo.getId()+"not found");
         }
         Employee employee = employeeDao.getEmployeeByPersonId(curPerson);
         if(employee==null){
-            throw new PersonInfoNotFoundException("employee with person id: "+updatePersonInfo.getID()+" not found");
+            throw new PersonInfoNotFoundException("employee with person id: "+updatePersonInfo.getId()+" not found");
         }
         curPerson.setFirstName(updatePersonInfo.getFirstName());
         curPerson.setLastName(updatePersonInfo.getLastName());
@@ -79,11 +79,11 @@ public class PersonService {
     public Person updateInfoWithGivenId(UpdatePersonInfo updatePersonInfo, Integer personId){
         Person curPerson = personDao.getPersonById(personId);
         if(curPerson==null){
-            throw new PersonInfoNotFoundException("person with id: "+updatePersonInfo.getID()+"not found");
+            throw new PersonInfoNotFoundException("person with id: "+updatePersonInfo.getId()+"not found");
         }
         Employee employee = employeeDao.getEmployeeByPersonId(curPerson);
         if(employee==null){
-            throw new PersonInfoNotFoundException("employee with person id: "+updatePersonInfo.getID()+" not found");
+            throw new PersonInfoNotFoundException("employee with person id: "+updatePersonInfo.getId()+" not found");
         }
         curPerson.setFirstName(updatePersonInfo.getFirstName());
         curPerson.setLastName(updatePersonInfo.getLastName());

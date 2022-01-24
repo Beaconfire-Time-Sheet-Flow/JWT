@@ -26,7 +26,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping("/api/personInfo")
+@RequestMapping("/apiuser/personInfo")
 public class PersonController {
 
     private static final Logger logger = LoggerFactory.getLogger(FileUploadRestController.class);
@@ -111,7 +111,7 @@ public class PersonController {
     }
 
     @PostMapping("/updateDoc")
-    public ResponseEntity<PersonalDocsDomain> updateDocs(
+    public ResponseEntity<PersonalDocsDomain> updateDoc(
             @RequestParam("file") MultipartFile file,
             @RequestParam(value = "comment", required = false)String comment,
             @RequestParam("id") Integer personId){
@@ -165,10 +165,10 @@ public class PersonController {
     public ResponseEntity<UpdatePersonInfo> updatePerson(
             @RequestBody UpdatePersonInfo updatePersonInfo,
             @RequestParam(name = "id", required = false) Integer personId){
-        if(personId==null && updatePersonInfo.getID()!=null){
+        if(personId==null && updatePersonInfo.getId()!=null){
             personService.updateInfo(updatePersonInfo);
             return ResponseEntity.ok(updatePersonInfo);
-        }else if(personId<=0 || updatePersonInfo.getID()==null || updatePersonInfo.getID()<=0){
+        }else if(personId<=0 || updatePersonInfo.getId()==null || updatePersonInfo.getId()<=0){
             return ResponseEntity.notFound().build();
         }
         personService.updateInfoWithGivenId(updatePersonInfo, personId);
