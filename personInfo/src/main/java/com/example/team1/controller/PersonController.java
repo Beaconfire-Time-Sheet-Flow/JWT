@@ -49,7 +49,7 @@ public class PersonController {
     @Autowired
     private FileStorageService fileStorageService;
 
-    @GetMapping("/")
+    @GetMapping("/all")
     public ResponseEntity<PersonInfoDomain> getPersonalInfo(@RequestParam("id") Integer personId){
         Person person = personService.findPersonById(personId);
         PersonInfoDomain res = new PersonInfoDomain();
@@ -62,7 +62,8 @@ public class PersonController {
                 res.setAvatar(employee.getAvatar());
                 res.setGender(person.getGender());
                 res.setDriverLicense(employee.getDriverLicense());
-                res.setDriverLicense(employee.getDriverLicenseExpirationDate());
+//                System.out.println(employee.getDriverLicense());
+                res.setDriverLicenseExpirationDate(employee.getDriverLicenseExpirationDate());
                 res.setEmail(person.getEmail());
                 res.setCellPhone(person.getCellPhone());
                 res.setAlternatePhone(person.getAlternatePhone());
