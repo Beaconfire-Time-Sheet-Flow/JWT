@@ -19,6 +19,10 @@ public class AddressDao extends AbstractHibernateDao<Address> {
         setClazz(Address.class);
     }
 
+    public List<Address> findAllAddress(){
+        return findAll();
+    }
+
     public Address getAddressById(Integer id){
         return findById(id);
     }

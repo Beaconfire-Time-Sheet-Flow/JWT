@@ -18,6 +18,14 @@ public class AddressService {
     @Autowired
     private AddressDao addressDao;
 
+    public List<Address> findAllAddr(){
+        return addressDao.findAllAddress();
+    }
+
+    public Address findById(Integer id){
+        return addressDao.getAddressById(id);
+    }
+
     @Transactional
     public List<AddressDomain> getAddressByPersonId(Person person){
         Optional<List<Address>> optional = Optional.ofNullable(addressDao.getAddressListByPersonId(person));
