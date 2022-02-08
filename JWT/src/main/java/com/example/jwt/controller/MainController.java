@@ -1,2 +1,4 @@
-package com.example.jwt.controller;public class MainController {
+package com.example.jwt.controller;
+
+public class MainController {
 }

@@ -1,2 +1,8 @@
-package com.example.jwt.service;public class UserService {
+package com.example.jwt.service;
+
+import org.springframework.stereotype.Service;
+
+@Service
+public class UserService {
+
 }

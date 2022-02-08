@@ -1,2 +1,4 @@
-package com.example.jwt.dao;public class UserDao {
+package com.example.jwt.dao;
+
+public class UserDao {
 }

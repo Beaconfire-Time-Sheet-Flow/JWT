@@ -1,2 +1,21 @@
-package com.example.jwt.entity;public class User {
+package com.example.jwt.entity;
+
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
+public class User {
+
+    private Integer id;
+
+    private String name;
+
+    private String pwd;
+
+    private String role;
 }
