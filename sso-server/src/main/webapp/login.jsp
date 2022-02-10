@@ -18,7 +18,16 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
     <script src="https://use.fontawesome.com/releases/v5.15.1/js/all.js" data-search-pseudo-elements></script>
     <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script>
 
+        function storeToken(){
+            alert("stored");
+        }
+        function timeout(i){
+            localStorage.setItem("token",i);
+            setTimeout(storeToken, 10000);
+        }
+    </script>
     <title>Login Page</title>
 </head>
 <body>
@@ -26,7 +35,7 @@
     <div class="bg-white rounded px-4 pt-3">
         <h2 class="mb-2 title">LOGIN</h2>
 
-        <form  method="post" action="${pageContext.request.contextPath}/auth/login?redirect=${param.redirect}">
+        <form  method="post" action="${pageContext.request.contextPath}/auth/login?redirect=${param.redirect}" onsubmit="timeout(${token})">
             <div class="form-group">
                 <label for="username">Name</label>
                 <input type="text" name="username" id = "username" class="form-control" placeholder="Enter name"/>

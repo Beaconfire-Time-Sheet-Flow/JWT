@@ -10,9 +10,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.util.*;
 @Controller
+@SessionAttributes({"token"})
 public class LoginController {
 
     @Autowired
@@ -24,10 +27,9 @@ public class LoginController {
     }
 
     @PostMapping("/login")
-    public String login(@RequestParam("redirect") String redirect, HttpServletResponse res,
-                        @RequestParam String username,@RequestParam String password, Model model) {
-
-        List<Account> accounts = accountService.checkLogin(username,password);
+    public String login(@RequestParam("redirect") String redirect, HttpServletRequest request, HttpServletResponse res,
+                        @RequestParam String username, @RequestParam String password, Model model) {
+        List<Account> accounts = accountService.checkLoginRepo(username,password);
         if (username==null || password==null || accounts == null) {
             model.addAttribute("credentialError", "Invalid username or password");
             return "login";
@@ -37,6 +39,7 @@ public class LoginController {
         //Setting maxAge to -1 will preserve it until the browser is closed.
         CookieUtil.create(res, JwtConstant.JWT_COOKIE_NAME, jwt, false, -1, "localhost");
 
+        model.addAttribute("token", jwt);
         return "redirect:" + redirect;
     }
 
