@@ -4,14 +4,14 @@ spring:
   cloud:
     gateway:
       routes:
-#        - id: user-service
-#          uri: lb://user-service
-#          predicates:
-#            - Path=/user-service/**
-#        - id: housing-service
-#          uri: lb://housing-service
-#          predicates:
-#            - Path=/housing-service/**
+        - id: sso-server
+          uri: lb://
+          predicates:
+            - Path=/**
+        - id: filter
+          uri: lb://filter
+          predicates:
+            - Path=/filter/**
 #        - id: composite-service
 #          uri: lb://composite-service
 #          predicates:
@@ -27,4 +27,4 @@ eureka:
     fetch-registry: true
     register-with-eureka: true
     service-url:
-      defaultZone: http://localhost:8761/eureka/
+      defaultZone: http://${eureka.instance.hostname}:8761/eureka/
