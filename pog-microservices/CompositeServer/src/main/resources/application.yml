@@ -1,0 +1,10 @@
+server:
+  port: 8084
+
+spring:
+  application:
+    name: management-composite-service
+
+services:
+  auth:
+    login: http://localhost:9999/auth/login

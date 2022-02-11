@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="FrameworkDetectionExcludesConfiguration">
+    <file type="web" url="file://$PROJECT_DIR$/CloudConfigServer" />
+    <file type="web" url="file://$PROJECT_DIR$/CompositeServer" />
+    <file type="web" url="file://$PROJECT_DIR$/Employee-microservice" />
+    <file type="web" url="file://$PROJECT_DIR$/EurekaDiscoveryServer" />
+    <file type="web" url="file://$PROJECT_DIR$/filter" />
+    <file type="web" url="file://$PROJECT_DIR$/sso-server" />
+  </component>
+  <component name="MavenProjectsManager">
+    <option name="originalFiles">
+      <list>
+        <option value="$PROJECT_DIR$/EurekaDiscoveryServer/pom.xml" />
+        <option value="$PROJECT_DIR$/CloudConfigServer/pom.xml" />
+        <option value="$PROJECT_DIR$/employee-microservice/pom.xml" />
+        <option value="$PROJECT_DIR$/Timesheet-microservice/pom.xml" />
+        <option value="$PROJECT_DIR$/CompositeServer/pom.xml" />
+        <option value="$PROJECT_DIR$/Timesheet-server/pom.xml" />
+        <option value="$PROJECT_DIR$/gateway/pom.xml" />
+        <option value="$PROJECT_DIR$/sso-server/pom.xml" />
+        <option value="$PROJECT_DIR$/filter/pom.xml" />
+      </list>
+    </option>
+  </component>
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_1_8" default="true" project-jdk-name="1.8" project-jdk-type="JavaSDK">
+    <output url="file://$PROJECT_DIR$/out" />
+  </component>
+</project>

@@ -1,0 +1,14 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="ConfigServer:war">
+    <output-path>$PROJECT_DIR$/CloudConfigServer/target</output-path>
+    <properties id="maven-jee-properties">
+      <options>
+        <module>ConfigServer</module>
+        <packaging>war</packaging>
+      </options>
+    </properties>
+    <root id="archive" name="ConfigServer-0.0.1-SNAPSHOT.war">
+      <element id="artifact" artifact-name="ConfigServer:war exploded" />
+    </root>
+  </artifact>
+</component>

@@ -1,0 +1,27 @@
+spring:
+  application:
+    name: timesheet-service
+
+  data:
+    mongodb:
+      #uri: mongodb+srv://localhost/?readPreference=primary&ssl=false
+      host: localhost
+      port: 27017
+      database: timesheet
+      auto-index-creation: true
+
+services:
+  auth:
+    login: http://localhost:9999/auth/login
+
+server:
+  port: 9090
+    
+eureka:
+  instance:
+    hostname: localhost
+  client:
+    fetch-registry: true
+    register-with-eureka: true
+    service-url:
+      defaultZone: http://localhost:8761/eureka    
